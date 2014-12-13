@@ -15,7 +15,7 @@ Using the dukesbookstore application as a baseline, the following modifications 
 ## Usage
 
 The following instructions are Windows centric but should be easily replicatable on Linux.
-To use:
+
 1. Download [WildFly 8.2.0.Final](http://wildfly.org/downloads/) and unzip to some directory (referred to as %WILDFLY_HOME%).
 2. Download [PostgreSQL 9.3](http://www.postgresql.org/download/) and install.
 3. Open pgAdmin and create a new database called "dukesbookstore".  If you want, you can create a user just for this database or use the sa user.

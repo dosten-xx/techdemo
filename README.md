@@ -5,7 +5,7 @@ Since this is based on Oracle's code, the original license still applies.  See l
 
 # Roadmap
 
-1. Modify app to work with WildFly.
+[Phase 1](Phase1.md) Modify app to work with WildFly.
   1. Use PostgreSQL RDBMS.
   2. Use Flyway for database management.
 2. Provide Docker deployments.
