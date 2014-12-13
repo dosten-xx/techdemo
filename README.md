@@ -5,13 +5,22 @@ Since this is based on Oracle's code, the original license still applies.  See l
 
 # Roadmap
 
-[Phase 1](Phase1.md) Modify app to work with WildFly.
-  1. Use PostgreSQL RDBMS.
-  2. Use Flyway for database management.
-2. Provide Docker deployments.
-  1. Single container for application and database.
-  2. Separate containers.
-3. Code quality improvements using FindBugs, Checkstyle and other tools.
-4. Integrate OWASP ESAPI for security.
-5. Use on OpenShift PaaS.
-  1. Utilize CloudForge and Jenkins.
+[Phase 1](Phase1.md)
+1. Modify app to work with WildFly.
+2. Use PostgreSQL RDBMS.
+3. Use Flyway for database management.
+
+[Phase 2]
+1. Provide Docker deployments.
+2. Single container for application and database.
+3. Separate containers.
+
+[Phase 3]
+1. Code quality improvements using FindBugs, Checkstyle and other tools.
+
+[Phase 4]
+1. Integrate OWASP ESAPI for security.
+
+[Phase 5]
+1. Use on OpenShift PaaS.
+2. Utilize CloudForge and Jenkins.
