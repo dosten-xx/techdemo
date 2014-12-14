@@ -7,7 +7,7 @@
 	<version>7.0.5</version>
 	<packaging>war</packaging>
 
-	<name>dukes-bookstore</name>
+	<name>techdemo</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
