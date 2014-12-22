@@ -17,8 +17,8 @@ Using the dukesbookstore application as a baseline, the following modifications 
 The following instructions are Windows centric but should be easily replicatable on Linux.
 
 1. Download [WildFly 8.2.0.Final](http://wildfly.org/downloads/) and unzip to some directory (referred to as %WILDFLY_HOME%).
-2. Download [PostgreSQL 9.3](http://www.postgresql.org/download/) and install.
-3. Open pgAdmin and create a new database called "dukesbookstore".  If you want, you can create a user just for this database or use the sa user.
+1. Download [PostgreSQL 9.3](http://www.postgresql.org/download/) and install.
+1. Open pgAdmin and create a new database called "dukesbookstore".  If you want, you can create a user just for this database or use the sa user.
 4. Add the following datasource snippet to %WILDFLY_HOME%/standalone/configuration/standalone.xml to add the JNDI datasource.  Make sure to replace the username and password with your local db user.
 ```
 <datasource jta="false" jndi-name="java:jboss/datasources/dukesBooksStoreDS" pool-name="dukesBookStoreDS" enabled="true" use-ccm="false">

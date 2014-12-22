@@ -11,6 +11,10 @@ Since this is based on Oracle's code, the original license still applies.  See l
 2. Use PostgreSQL RDBMS.
 3. Use Flyway for database management.
 
+[Phase 1.5]
+
+1. Add Arquillian testing.
+
 [Phase 2]
 
 1. Provide Docker containers.

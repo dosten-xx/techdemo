@@ -25,6 +25,7 @@
 		<maven.release.plugin.version>2.4.1</maven.release.plugin.version>
 		<maven.exec.plugin.version>1.2.1</maven.exec.plugin.version>
 		<junit.version>4.11</junit.version>
+		<postgresql.version>9.3-1102-jdbc41</postgresql.version>
 
 		<eclipselink.version>2.5.0</eclipselink.version>
 		<glassfish.embedded.version>4.0</glassfish.embedded.version>
@@ -149,6 +150,26 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 			</plugin>
+					<plugin>
+						<groupId>org.flywaydb</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<version>3.0</version>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/dukesbookstoretest</url>
+							<user>${POSTGRES_USER}</user>
+							<password>${POSTGRES_PASSWORD}</password>
+							<locations>
+								<location>filesystem:${basedir}/db</location>
+							</locations>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>${postgresql.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>			
 		</plugins>
 	</build>
 
