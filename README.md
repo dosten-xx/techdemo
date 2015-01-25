@@ -11,9 +11,9 @@ Since this is based on Oracle's code, the original license still applies.  See l
 2. Use PostgreSQL RDBMS.
 3. Use Flyway for database management.
 
-[Phase 1.5]
+[Phase 1.5](Phase1_5.md)
 
-1. Add Arquillian testing.
+1. Arquillian testing.
 
 [Phase 2]
 

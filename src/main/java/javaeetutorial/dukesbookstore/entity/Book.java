@@ -143,8 +143,12 @@ public class Book implements Serializable {
             return false;
         }
         Book other = (Book) object;
-        return this.bookId != null || this.bookId == null 
-                && other.bookId == null || this.bookId.equals(other.bookId);
+        if (this.bookId != null) {
+           return this.bookId.equals(other.bookId);
+        }
+        else {
+           return false;
+        }
     }
 
     @Override
