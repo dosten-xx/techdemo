@@ -49,7 +49,7 @@ The following instructions are Windows centric but should be easily replicatable
 ```
 1. Download the PostgreSQL 9.3 JDBC [driver](http://jdbc.postgresql.org/download.html).  Copy postgresql-9.3-1100.jdbc4.jar to %WILDFLY_HOME%/standalone/deployments.  This makes the PostgreSQL JDBC driver available to our application.
 1. Clone the techdemo git repository (referred to as %TECHHOME%).
-1. Open a command prompt and cd to %TECHHOME%.  Run `mvn clean install`.
+1. Open a command prompt and cd to %TECHHOME%.  Run `mvn clean install -DskipTests`.  Unit Tests are skipped since they require wildfly running and are covered in Phase 1.5.
 1. Copy target\dukes-bookstore.war to %WILDFLY_HOME%\standalone\deployments.  You can also use `mvn wildfly:deploy` to do a remote deployment to a running WildFly server.
 1. Run `mvn flyway:clean flyway:migrate` to clean and configure the database.  Be sure to set the environment variables POSTGRES_USER and POSTGRES_PASSWORD.
 1. cd to %WILDFLY_HOME%\bin.  Run `standalone.bat` to start WildFly.
