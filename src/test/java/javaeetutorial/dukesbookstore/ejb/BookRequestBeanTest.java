@@ -105,6 +105,7 @@ public class BookRequestBeanTest
       Book result = null;
       try {
          result = bookRequestBean.getBook("bogusid");
+         logger.log(Level.FINER, result.toString());
          fail("should get BookNotFoundException here");
       }
       catch (BookNotFoundException e) {

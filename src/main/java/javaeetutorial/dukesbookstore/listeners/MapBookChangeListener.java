@@ -27,12 +27,12 @@ public class MapBookChangeListener implements ActionListener {
     public MapBookChangeListener() {
         books = new HashMap<>(6);
 
-        String book1 = books.put("Duke", "201");
-        String book2 = books.put("Jeeves", "202");
-        String book3 = books.put("Masterson", "203");
-        String book4 = books.put("Novation", "205");
-        String book5 = books.put("Thrilled", "206");
-        String book6 = books.put("Coding", "207");
+        books.put("Duke", "201");
+        books.put("Jeeves", "202");
+        books.put("Masterson", "203");
+        books.put("Novation", "205");
+        books.put("Thrilled", "206");
+        books.put("Coding", "207");
     }
 
     @Override

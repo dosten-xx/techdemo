@@ -30,7 +30,6 @@ public class MapComponent extends UICommand {
     private enum PropertyKeys {
         current;
     }
-    private final String current = null;
 
     public MapComponent() {
         super();

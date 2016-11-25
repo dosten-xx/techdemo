@@ -1,6 +1,5 @@
 package javaeetutorial.dukesbookstore.web.managedbeans;
 
-import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -14,12 +13,10 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class LocaleBean extends AbstractBean implements Serializable
+public class LocaleBean extends AbstractBean
 {
    private static final long serialVersionUID = 1L;
-
-   private Logger log = Logger.getLogger("dukesbookstore.web.LocalBean");
-
+   private static Logger LOGGER = Logger.getLogger("dukesbookstore.web.LocalBean");
    private Locale locale = context().getViewRoot().getLocale();
 
    public LocaleBean()
@@ -28,7 +25,7 @@ public class LocaleBean extends AbstractBean implements Serializable
    public String getLanguage()
    {
       Locale newlocale = null;
-      log.log(Level.INFO, "Entering LocaleBean.getLanguage");
+      LOGGER.log(Level.INFO, "Entering LocaleBean.getLanguage");
       String lang = locale.getLanguage();
       Map<String, Object> map = context().getExternalContext().getSessionMap();
       if (map.containsKey("locale")) {
@@ -45,20 +42,20 @@ public class LocaleBean extends AbstractBean implements Serializable
 
    public Locale getLocale()
    {
-      log.log(Level.FINER, "Entering LocaleBean.getLocale");
+      LOGGER.log(Level.FINER, "Entering LocaleBean.getLocale");
       return locale;
    }
 
    public void setLanguage(String language)
    {
-      log.log(Level.FINER, "Entering LocaleBean.setLanguage");
+      LOGGER.log(Level.FINER, "Entering LocaleBean.setLanguage");
       locale = new Locale(language);
       context().getViewRoot().setLocale(locale);
    }
 
    public void setLocale(Locale locale)
    {
-      log.log(Level.FINER, "Entering LocaleBean.setLocale");
+      LOGGER.log(Level.FINER, "Entering LocaleBean.setLocale");
       this.locale = locale;
    }
 }

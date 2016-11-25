@@ -127,7 +127,7 @@ public class CashierBean extends AbstractBean {
 
     public String submit() {
         // Calculate and save the ship date
-        int days = Integer.valueOf(shippingOption).intValue();
+        int days = Integer.parseInt(shippingOption);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, days);
         setShipDate(cal.getTime());

@@ -18,100 +18,111 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- * <p>Backing bean used by the
+ * Backing bean used by the
  * <code>/bookcatalog.xhtml</code>,
  * <code>/bookshowcart.xhtml</code>, and
- * <code>/bookcashier.xhtml</code> pages.</p>
+ * <code>/bookcashier.xhtml</code> pages.
  */
 @Named("cart")
 @SessionScoped
-public class ShoppingCart extends AbstractBean implements Serializable {
+public class ShoppingCart extends AbstractBean
+{
+   private static final Logger logger = Logger.getLogger("dukesbookstore.web.managedbeans.ShoppingCart");
+   private static final long serialVersionUID = -115105724952554868L;
+   HashMap<String, ShoppingCartItem> items = null;
+   int numberOfItems = 0;
 
-    private static final Logger logger =
-            Logger.getLogger("dukesbookstore.web.managedbeans.ShoppingCart");
-    private static final long serialVersionUID = -115105724952554868L;
-    HashMap<String, ShoppingCartItem> items = null;
-    int numberOfItems = 0;
+   public ShoppingCart()
+   {
+      items = new HashMap<>();
+   }
 
-    public ShoppingCart() {
-        items = new HashMap<>();
-    }
+   public synchronized void add(String bookId, Book book)
+   {
+      if (items.containsKey(bookId)) {
+         ShoppingCartItem scitem = (ShoppingCartItem) items.get(bookId);
+         scitem.incrementQuantity();
+      }
+      else {
+         ShoppingCartItem newItem = new ShoppingCartItem(book);
+         items.put(bookId, newItem);
+      }
+   }
 
-    public synchronized void add(String bookId, Book book) {
-        if (items.containsKey(bookId)) {
-            ShoppingCartItem scitem = (ShoppingCartItem) items.get(bookId);
-            scitem.incrementQuantity();
-        } else {
-            ShoppingCartItem newItem = new ShoppingCartItem(book);
-            items.put(bookId, newItem);
-        }
-    }
+   public synchronized void remove(String bookId)
+   {
+      if (items.containsKey(bookId)) {
+         ShoppingCartItem scitem = (ShoppingCartItem) items.get(bookId);
+         scitem.decrementQuantity();
 
-    public synchronized void remove(String bookId) {
-        if (items.containsKey(bookId)) {
-            ShoppingCartItem scitem = (ShoppingCartItem) items.get(bookId);
-            scitem.decrementQuantity();
+         if (scitem.getQuantity() <= 0) {
+            items.remove(bookId);
+         }
 
-            if (scitem.getQuantity() <= 0) {
-                items.remove(bookId);
-            }
+         numberOfItems--;
+      }
+   }
 
-            numberOfItems--;
-        }
-    }
+   public synchronized List<ShoppingCartItem> getItems()
+   {
+      List<ShoppingCartItem> results = new ArrayList<>();
+      results.addAll(this.items.values());
 
-    public synchronized List<ShoppingCartItem> getItems() {
-        List<ShoppingCartItem> results = new ArrayList<>();
-        results.addAll(this.items.values());
+      return results;
+   }
 
-        return results;
-    }
+   public synchronized int getNumberOfItems()
+   {
+      numberOfItems = 0;
+      for (ShoppingCartItem item : getItems()) {
+         numberOfItems += item.getQuantity();
+      }
 
-    public synchronized int getNumberOfItems() {
-        numberOfItems = 0;
-        for (ShoppingCartItem item : getItems()) {
-            numberOfItems += item.getQuantity();
-        }
+      return numberOfItems;
+   }
 
-        return numberOfItems;
-    }
+   public synchronized double getTotal()
+   {
+      double amount = 0.0;
+      for (ShoppingCartItem item : getItems()) {
+         Book bookDetails = (Book) item.getItem();
 
-    public synchronized double getTotal() {
-        double amount = 0.0;
-        for (ShoppingCartItem item : getItems()) {
-            Book bookDetails = (Book) item.getItem();
+         amount += (item.getQuantity() * bookDetails.getPrice());
+      }
 
-            amount += (item.getQuantity() * bookDetails.getPrice());
-        }
+      return roundOff(amount);
+   }
 
-        return roundOff(amount);
-    }
+   private double roundOff(double x)
+   {
+      long val = Math.round(x * 100); // cents
 
-    private double roundOff(double x) {
-        long val = Math.round(x * 100); // cents
+      return val / 100.0;
+   }
 
-        return val / 100.0;
-    }
+   /**
+    * Buy the items currently in the shopping cart.
+    * 
+    * @return the navigation page
+    */
+   public String buy()
+   {
+      // "Cannot happen" sanity check
+      if (getNumberOfItems() < 1) {
+         message(null, "CartEmpty");
 
-    /**
-     * <p>Buy the items currently in the shopping cart.</p>
-     * @return the navigation page
-     */
-    public String buy() {
-        // "Cannot happen" sanity check
-        if (getNumberOfItems() < 1) {
-            message(null, "CartEmpty");
+         return (null);
+      }
+      else {
+         return ("bookcashier");
+      }
+   }
 
-            return (null);
-        } else {
-            return ("bookcashier");
-        }
-    }
-
-    public synchronized void clear() {
-        logger.log(Level.INFO, "Clearing cart.");
-        items.clear();
-        numberOfItems = 0;
-        message(null, "CartCleared");
-    }
+   public synchronized void clear()
+   {
+      logger.log(Level.INFO, "Clearing cart.");
+      items.clear();
+      numberOfItems = 0;
+      message(null, "CartCleared");
+   }
 }

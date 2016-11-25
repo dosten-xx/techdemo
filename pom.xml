@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.glassfish.javaeetutorial</groupId>
@@ -11,7 +12,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<javaee.api.version>7.0</javaee.api.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
 		<maven.clean.plugin.version>2.5</maven.clean.plugin.version>
@@ -21,13 +21,12 @@
 		<maven.ejb.plugin.version>2.3</maven.ejb.plugin.version>
 		<maven.jar.plugin.version>2.4</maven.jar.plugin.version>
 		<maven.rar.plugin.version>2.3</maven.rar.plugin.version>
+		<javaee.api.version>7.0</javaee.api.version>
 		<maven.license.plugin.version>1.10.b1</maven.license.plugin.version>
-		<maven.release.plugin.version>2.4.1</maven.release.plugin.version>
-		<maven.exec.plugin.version>1.2.1</maven.exec.plugin.version>
+		<findbugs.version>3.0.4</findbugs.version>
 		<junit.version>4.11</junit.version>
 		<postgresql.version>9.3-1102-jdbc41</postgresql.version>
 		<version.wildfly.bom>8.2.0.Final</version.wildfly.bom>
-
 		<eclipselink.version>2.5.0</eclipselink.version>
 		<glassfish.embedded.version>4.0</glassfish.embedded.version>
 		<cargo.plugin.version>1.4.4</cargo.plugin.version>
@@ -103,8 +102,8 @@
 			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
-        <!-- Arquillian -->
+
+		<!-- Arquillian -->
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
@@ -206,17 +205,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>${maven.release.plugin.version}</version>
-				<configuration>
-                    <!--
-                     During release:perform, enable the "sdk" profile
-                    -->
-					<releaseProfiles>sdk</releaseProfiles>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-				</configuration>
-			</plugin>
 
 			<plugin>
 				<groupId>org.flywaydb</groupId>
@@ -244,13 +232,38 @@
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.0.2.Final</version>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+				<configuration>
+					<effort>max</effort>
+					<excludeFilterFile>findbugs_exclude.xml</excludeFilterFile>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+				<configuration>
+					<effort>max</effort>
+					<excludeFilterFile>findbugs_exclude.xml</excludeFilterFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<profiles>
 		<profile>
-            <!-- Arquillian testing profile that executes tests in a remote server instance
-				 Start Wildfly then run with: mvn -Parq-wildfly-remote -DPOSTGRES_USER=<user> -DPOSTGRES_PASSWORD=<password> flyway:clean flyway:migrate clean test -->
+			<!-- Arquillian testing profile that executes tests in a remote server 
+				instance Start Wildfly then run with: mvn -Parq-wildfly-remote -DPOSTGRES_USER=<user> 
+				-DPOSTGRES_PASSWORD=<password> flyway:clean flyway:migrate clean test -->
 			<id>arq-wildfly-remote</id>
 			<dependencies>
 				<dependency>

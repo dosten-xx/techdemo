@@ -7,85 +7,93 @@
  */
 package javaeetutorial.dukesbookstore.web.managedbeans;
 
-import java.io.Serializable;
 import java.util.List;
 import javaeetutorial.dukesbookstore.entity.Book;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- * <p>Backing bean for the <code>/bookcatalog.xhtml</code> page.</p>
+ * <p>
+ * Backing bean for the <code>/bookcatalog.xhtml</code> page.
+ * </p>
  */
 @Named("catalog")
 @SessionScoped
-public class CatalogBean extends AbstractBean implements Serializable {
+public class CatalogBean extends AbstractBean
+{
+   private static final long serialVersionUID = -3594317405246398714L;
+   private int totalBooks = 0;
 
-    private static final long serialVersionUID = -3594317405246398714L;
-    private int totalBooks = 0;
+   /**
+    * @return the currently selected <code>Book</code> instance from the
+    *         user request
+    */
+   protected Book book()
+   {
+      Book book;
+      book = (Book) context().getExternalContext().getRequestMap().get("book");
 
-    /**
-     * @return the currently selected <code>Book</code> instance from the 
-     * user request
-     */
-    protected Book book() {
-        Book book;
-        book = (Book) context().getExternalContext()
-           .getRequestMap().get("book");
+      return (book);
+   }
 
-        return (book);
-    }
+   /**
+    * Add the selected item to our shopping cart.
+    * 
+    * @return the navigation page
+    */
+   public String add()
+   {
+      Book book = book();
+      cart.add(book.getBookId(), book);
+      message(null, "ConfirmAdd", new Object[] { book.getTitle() });
 
-    /**
-     * <p>Add the selected item to our shopping cart.</p>
-     * @return the navigation page
-     */
-    public String add() {
-        Book book = book();
-        cart.add(book.getBookId(), book);
-        message(null, "ConfirmAdd", new Object[]{book.getTitle()});
+      return ("bookcatalog");
+   }
 
-        return ("bookcatalog");
-    }
+   /**
+    * Show the details page for the current book.
+    * 
+    * @return the navigation page
+    */
+   public String details()
+   {
+      context().getExternalContext().getSessionMap().put("selected", book());
 
-    /**
-     * <p>Show the details page for the current book.</p>
-     * @return the navigation page
-     */
-    public String details() {
-        context().getExternalContext().getSessionMap().put("selected", book());
+      return ("bookdetails");
+   }
 
-        return ("bookdetails");
-    }
+   public int getTotalBooks()
+   {
+      totalBooks = cart.getNumberOfItems();
 
-    public int getTotalBooks() {
-        totalBooks = cart.getNumberOfItems();
+      return totalBooks;
+   }
 
-        return totalBooks;
-    }
+   public void setTotalBooks(int totalBooks)
+   {
+      this.totalBooks = totalBooks;
+   }
 
-    public void setTotalBooks(int totalBooks) {
-        this.totalBooks = totalBooks;
-    }
+   public int getBookQuantity()
+   {
+      int bookQuantity = 0;
+      Book book = book();
 
-    public int getBookQuantity() {
-        int bookQuantity = 0;
-        Book book = book();
+      if (book == null) {
+         return bookQuantity;
+      }
 
-        if (book == null) {
-            return bookQuantity;
-        }
+      List<ShoppingCartItem> results = cart.getItems();
+      for (ShoppingCartItem item : results) {
+         Book bd = (Book) item.getItem();
 
-        List<ShoppingCartItem> results = cart.getItems();
-        for (ShoppingCartItem item : results) {
-            Book bd = (Book) item.getItem();
+         if ((bd.getBookId()).equals(book.getBookId())) {
+            bookQuantity = item.getQuantity();
 
-            if ((bd.getBookId()).equals(book.getBookId())) {
-                bookQuantity = item.getQuantity();
+            break;
+         }
+      }
 
-                break;
-            }
-        }
-
-        return bookQuantity;
-    }
+      return bookQuantity;
+   }
 }

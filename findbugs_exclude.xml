@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FindBugsFilter>
+	<Match>
+		<Class name="javaeetutorial.dukesbookstore.web.managedbeans.BookstoreBean" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<Class name="javaeetutorial.dukesbookstore.web.managedbeans.CashierBean" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<Class name="javaeetutorial.dukesbookstore.web.managedbeans.CashierBean" />
+		<Bug pattern="EI_EXPOSE_REP" />
+	</Match>
+	<Match>
+		<Class name="javaeetutorial.dukesbookstore.web.managedbeans.CashierBean" />
+		<Bug pattern="EI_EXPOSE_REP2" />
+	</Match>
+	<Match>
+		<Class name="javaeetutorial.dukesbookstore.web.managedbeans.CashierBean" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<Class name="~.*Test" />
+	</Match>
+	<Match>
+		<Bug pattern="BC_UNCONFIRMED_CAST" />
+	</Match>
+	<Match>
+		<Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+		<Confidence value="2" />
+	</Match>
+</FindBugsFilter>

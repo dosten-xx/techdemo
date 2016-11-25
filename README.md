@@ -15,13 +15,13 @@ Since this is based on Oracle's code, the original license still applies.  See l
 
 1. Arquillian testing.
 
-[Phase 2]
+[Phase 2](Phase2.md)
 
-1. Provide Docker containers.
+1. Code quality improvements using FindBugs.
 
 [Phase 3]
 
-1. Code quality improvements using FindBugs, Checkstyle and other tools.
+1. Provide Docker containers.
 
 [Phase 4]
 
