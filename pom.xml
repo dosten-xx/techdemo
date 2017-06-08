@@ -5,13 +5,14 @@
 
 	<groupId>org.glassfish.javaeetutorial</groupId>
 	<artifactId>dukes-bookstore</artifactId>
-	<version>7.0.5</version>
+	<version>7.0.6</version>
 	<packaging>war</packaging>
 
 	<name>techdemo</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
 		<maven.clean.plugin.version>2.5</maven.clean.plugin.version>
@@ -21,18 +22,21 @@
 		<maven.ejb.plugin.version>2.3</maven.ejb.plugin.version>
 		<maven.jar.plugin.version>2.4</maven.jar.plugin.version>
 		<maven.rar.plugin.version>2.3</maven.rar.plugin.version>
-		<javaee.api.version>7.0</javaee.api.version>
 		<maven.license.plugin.version>1.10.b1</maven.license.plugin.version>
+		<maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+		<maven.wildfly.plugin.version>1.0.2.Final</maven.wildfly.plugin.version>
+		<javaee.api.version>7.0</javaee.api.version>
 		<findbugs.version>3.0.4</findbugs.version>
 		<junit.version>4.11</junit.version>
 		<postgresql.version>9.3-1102-jdbc41</postgresql.version>
-		<version.wildfly.bom>8.2.0.Final</version.wildfly.bom>
+		<version.wildfly.bom>8.2.1.Final</version.wildfly.bom>
 		<eclipselink.version>2.5.0</eclipselink.version>
 		<glassfish.embedded.version>4.0</glassfish.embedded.version>
 		<cargo.plugin.version>1.4.4</cargo.plugin.version>
 		<glassfish.domain.name>domain1</glassfish.domain.name>
 		<glassfish.home>${glassfish.home.prefix}/glassfish4</glassfish.home>
 		<integration.container.id>glassfish4x</integration.container.id>
+		<flyway.version>3.0</flyway.version>
 	</properties>
 
 	<dependencyManagement>
@@ -184,8 +188,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -209,7 +213,7 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>3.0</version>
+				<version>${flyway.version}</version>
 				<configuration>
 					<url>jdbc:postgresql://localhost:5432/dukesbookstore</url>
 					<user>${POSTGRES_USER}</user>
@@ -230,7 +234,7 @@
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.0.2.Final</version>
+				<version>${maven.wildfly.plugin.version}</version>
 			</plugin>
 
 			<plugin>
@@ -247,6 +251,14 @@
 
 	<reporting>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
+				<configuration>
+					<failOnError>false</failOnError>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>

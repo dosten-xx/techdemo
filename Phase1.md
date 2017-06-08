@@ -1,6 +1,6 @@
 # Phase 1
 
-Using the dukesbookstore application as a baseline, the following modifications were made to get it to work with WildFly 8.2.0.Final and PostgreSQL:
+Using the dukesbookstore application as a baseline, the following modifications were made to get it to work with WildFly and PostgreSQL:
 
 * Moved the parent POM plugins and dependencies down to make the project standalone.
 * Updated persistence.xml to use Hibernate.
@@ -16,15 +16,16 @@ Using the dukesbookstore application as a baseline, the following modifications 
 
 The following instructions are Windows centric but should be easily replicatable on Linux.
 
-1. Download [WildFly 8.2.0.Final](http://wildfly.org/downloads/) and unzip to some directory (referred to as %WILDFLY_HOME%).
-1. Download [PostgreSQL 9.3](http://www.postgresql.org/download/) and install.
+1. Download [WildFly 8.2.1.Final](http://wildfly.org/downloads/) and unzip to some directory (referred to as %WILDFLY_HOME%).
+1. Download [PostgreSQL 9.6.3](http://www.postgresql.org/download/) and install.
 1. Open pgAdmin and create a new database called "dukesbookstore".  If you want, you can create a user just for this database or use the sa user.
-1. Add the following datasource snippet to %WILDFLY_HOME%/standalone/configuration/standalone.xml to add the JNDI datasource.  Make sure to replace USERNAME and PASSWORD with your local db user.
+1. Download the PostgreSQL 9.6.3 JDBC [driver](http://jdbc.postgresql.org/download.html).  Copy the jar to %WILDFLY_HOME%/standalone/deployments.  This makes the PostgreSQL JDBC driver available to the application.
+1. Add the following datasource snippet to %WILDFLY_HOME%/standalone/configuration/standalone.xml to add the JNDI datasource.  Make sure to replace USERNAME and PASSWORD with your local db user and $JDBDJAR with the file name of the JDBD driver downloaded above.
 ```
 <datasource jta="false" jndi-name="java:jboss/datasources/dukesBooksStoreDS" pool-name="dukesBookStoreDS" enabled="true" use-ccm="false">
 	<connection-url>jdbc:postgresql://localhost:5432/dukesbookstore</connection-url>
 	<driver-class>org.postgresql.Driver</driver-class>
-	<driver>postgresql-9.3-1100.jdbc4.jar</driver>
+	<driver>$JDBCJAR</driver>
 	<security>
 		<user-name>$USERNAME</user-name>
 		<password>$PASSWORD</password>
@@ -47,8 +48,7 @@ The following instructions are Windows centric but should be easily replicatable
 	</statement>
 </datasource>
 ```
-1. Download the PostgreSQL 9.3 JDBC [driver](http://jdbc.postgresql.org/download.html).  Copy postgresql-9.3-1100.jdbc4.jar to %WILDFLY_HOME%/standalone/deployments.  This makes the PostgreSQL JDBC driver available to our application.
-1. Clone the techdemo git repository (referred to as %TECHHOME%).
+1. Clone the techdemo git repository (referred to as %TECHHOME%).   
 1. Open a command prompt and cd to %TECHHOME%.  Run `mvn clean install -DskipTests`.  Unit Tests are skipped since they require wildfly running and are covered in Phase 1.5.
 1. Copy target\dukes-bookstore.war to %WILDFLY_HOME%\standalone\deployments.  You can also use `mvn wildfly:deploy` to do a remote deployment to a running WildFly server.
 1. Run `mvn flyway:clean flyway:migrate` to clean and configure the database.  Be sure to set the environment variables POSTGRES_USER and POSTGRES_PASSWORD.

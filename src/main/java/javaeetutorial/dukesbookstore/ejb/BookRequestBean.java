@@ -51,7 +51,8 @@ public class BookRequestBean {
         }
     }
 
-    public List<Book> getBooks() throws BooksNotFoundException {
+    @SuppressWarnings("unchecked")
+	public List<Book> getBooks() throws BooksNotFoundException {
         try {
             return (List<Book>) em.createNamedQuery("findBooks").getResultList();
         } catch (Exception ex) {
